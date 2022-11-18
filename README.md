@@ -51,7 +51,6 @@ Run the following script to pre-pull all the images of a pre-defined workspace (
 ./configure-image-puller.sh
 ```
 
-
 Additional commands to patch Dev Spaces to use upstream images:
 
 ```bash
@@ -143,10 +142,31 @@ This example shows ability to build, package, deploy and test applications from 
 This example shows that dependencies needed for development (in this case, the PostgreSQL database) is available within the workspace pod by adding new components in the devfile.
 
 ## STEP 5 - Restricted network support (optional)
+- Use a git service that uses an untrusted TLS certificate
+- Use a maven artifact repository that uses
+- Configure a proxy
+- Using the embedded openvsx registry
 
 ## STEP 6 - Image puller / ephemeral storage for faster workspaces startup (optional)
 
 ## STEP 7 - Monitoring
+
+## STEP 8 - Developer workspace configuration
+- tooling configuration
+  - dotfiles (in particular bashrc and PS1)
+  - maven settings
+  - SSH key
+- editor configuration
+  - VS Code (theme, terminal copy on select, extensions config, default extensions?)
+  - Theia
+  - IntelliJ
+- PAT to connect to git service
+- add a devfile:
+    configure an image with custom tools
+    add commands
+    add endpoints
+    add pre-start
+- add a volume shared between workspaces
 
 # Cleanup
 
