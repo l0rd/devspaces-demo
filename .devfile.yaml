@@ -19,7 +19,8 @@ commands:
         git submodule init && git submodule update && \
         git -C devspaces checkout devspaces-3-rhel-8 && \
         cd devspaces/product && \
-        ./installDevSpacesFromLatestIIB.sh --next
+        ./installDevSpacesFromLatestIIB.sh --next && \
+        oc patch OperatorHub cluster --type json -p '[{"op": "add", "path": "/spec/disableAllDefaultSources", "value": false}]'
   - id: 2-day1-configs
     exec:
       label: "2. Create users, change inactivity timeout and enable container build capabilities, GitHub OAuth and image puller"

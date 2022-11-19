@@ -19,17 +19,34 @@ data:
   htpasswd: ${htpwd_encoded}
 EOF
 
-kubectl patch oauth cluster --type='json' -p '[
-  {
-    "op":"add","path":"/spec/identityProviders/1",
-    "value":{
-      "name":"htpasswd",
-      "mappingMethod":"claim",
-      "type":"HTPasswd",
-      "htpasswd":
-        {"fileData":
-          {"name":"htpass-secret"}
-        }
-    }
-  }
-]'
+# If there are no identityprovider yet
+kubectl patch oauths cluster --type merge -p '
+spec:
+  identityProviders:
+    - name: htpasswd
+      mappingMethod: claim
+      type: HTPasswd
+      htpasswd:
+        fileData:
+          name: htpass-secret
+'
+
+# If there is an existing identity providers
+# kubectl patch oauth cluster --type='json' -p '[
+#   {
+#     "op":"add","path":"/spec/identityProviders/1",
+#     "value":{
+#       "name":"htpasswd",
+#       "mappingMethod":"claim",
+#       "type":"HTPasswd",
+#       "htpasswd":
+#         {"fileData":
+#           {"name":"htpass-secret"}
+#         }
+#     }
+#   }
+# ]'
+
+sleep 5
+
+oc policy add-role-to-user registry-editor "htpasswd:${USER}"
